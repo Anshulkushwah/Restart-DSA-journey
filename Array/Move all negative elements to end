@@ -1,0 +1,25 @@
+link : https://practice.geeksforgeeks.org/problems/move-all-negative-elements-to-end1813/1
+
+  void segregateElements(int arr[],int n)
+    {
+        // Your code goes here
+         int temp[n];
+         int j = 0;
+        
+        for(int i=0 ; i<n ; i++){
+            if(arr[i]>= 0){
+                temp[j++] = arr[i];
+            }
+        }
+        
+        if (j == n || j == 0) return;
+            
+        for(int i=0 ; i<n ; i++){
+            if(arr[i]< 0){
+                temp[j++] = arr[i];
+            }    
+        }
+        
+        // Copy contents of temp[] to arr[]
+        memcpy(arr, temp, sizeof(temp));
+        }
