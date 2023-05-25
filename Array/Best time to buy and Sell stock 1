@@ -1,0 +1,19 @@
+link : Anuj bhaiya video
+
+ int maxProfit(vector<int>& prices) {
+        int MinSoFar = INT_MAX;
+        int MaxProfit=0;
+        int CurrDiff= 0;
+        int siz = prices.size();
+        for(int i = 0 ; i< siz; i++){
+           
+            if(prices[i] < MinSoFar){
+                MinSoFar = prices[i];
+            }
+          CurrDiff=prices[i]-MinSoFar;
+          if(CurrDiff>MaxProfit) {
+              MaxProfit=CurrDiff;
+          } 
+        }
+        return MaxProfit;
+    }
