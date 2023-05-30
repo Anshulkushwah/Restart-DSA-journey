@@ -1,0 +1,38 @@
+https://youtu.be/02NwBUPr1uw
+
+
+class Solution 
+{
+    public:
+
+    //Function to find the minimum number of swaps required to sort the array. 
+	int minSwaps(vector<int>&arr)
+	{
+	    int n = arr.size();
+    vector<int>temp=arr;
+    sort(temp.begin(),temp.end());
+    unordered_map<int,int>m;
+    int ans = 0;
+    
+    // storing index as a value 
+    for(int i=0;i<n;i++){
+        m[arr[i]]=i;
+    }
+    
+    for(int i=0;i<n;i++){
+        if(arr[i]!=temp[i]){
+            ans++;
+            int init=arr[i];
+            int it = m[temp[i]];
+            
+            swap(arr[i],arr[it]);
+            m[init]=m[temp[i]];
+            m[temp[i]]=i;
+        }
+    }
+    
+    return ans;
+    
+
+	}
+};
