@@ -1,0 +1,17 @@
+ link:https://youtu.be/srSBc1v_zeQ
+ 
+ vector<int> findTwoElement(vector<int> arr, int n) {
+        // code here
+        vector<int> ans(2);
+        int i;
+        for (i = 0; i < n; i++) {
+            int z = abs(arr[i]);
+            if(arr[z-1]<0) ans[0]=z;
+            else arr[z-1]= -arr[z-1];
+        }
+        for (i = 0; i < n; i++) {
+            if (arr[i] > 0) ans[1] = i + 1;
+            
+        }
+        return ans;
+    }
