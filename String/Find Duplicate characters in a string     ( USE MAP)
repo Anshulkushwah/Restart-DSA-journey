@@ -1,0 +1,16 @@
+class Solution{
+public:
+	string removeDuplicates(string str) {
+	    // code here
+       string s;
+       for(int i=0;i<str.size();i++)
+       {
+         if(s.find(str[i]) ==string::npos) // string mai match nahi hua (npos => no position , no match)
+         {                              // to usko string mai daal do
+             s.push_back(str[i]);
+         }
+        }
+        return s;
+
+	}
+};
