@@ -1,0 +1,74 @@
+#include <bits/stdc++.h> 
+/*
+	Steps:
+
+ 
+
+We create a recursive function let’s say isInterleaveUtil and pass A, B, C, n1, n2, n3 as arguments, where n1,n2, and n3 are the length of A, B, and C.
+bool isInterleaveUtil( A, B, C, n1, n2, n3):
+
+If all the strings become empty i.e. n1,n2.and n3 become 0, then simply return true.
+If the length of C is not equal to (length of A + length of B),i.e  n1+n2 != n3 then we simply return false.
+If the last character of both A and B matches with the last character of C, then we check for both the cases i.e. retreating A by one character and B by one character i.e. call isInterleaveUtil(A, B, C, n1-1, n2, n3-1) and isInterleaveUtil(A, B, C, n1, n2-1, n3-1), and return true, if either of them returns true.
+If the last character of C matches with the last character of A, but not with the last character of B, we move one character back in A and check recursively. I.e. call  isInterleaveUtil(A, B, C, n1-1, n2, n3-1);
+If the last character of C matches with the last character of B, but not with the last character of A, we move one character back in B and check recursively. I.e. call  isInterleaveUtil(A, B, C, n1, n2-1, n3-1).
+If the last character of C matches neither with the last character of A nor with the last character of B, then we simply return false.
+Time Complexity
+O(2^(N + M)), where N is the length of the string A and M is the length of string B.
+
+In the worst case, for every character of the input strings A and B, there can be two choices. Hence, the time complexity will be O(2^(N + M)).
+
+Space Complexity
+O(N + M), where N is the length of the string A and M is the length of string B.
+
+ 
+
+The number of recursive calls can go up to (N + M) in the worst case. Hence, the overall complexity will be O(N + M).
+
+    Time Complexity: O(2^(N + M)). 
+    Space Complexity: O(N + M).
+    
+    Where N is the length of the string a and M is the length of string b.
+*/
+
+#include <vector>
+#include <string>
+
+bool isInterleaveUtil(string a, string b, string c, int n1, int n2, int n3){
+
+    //If all the strings become empty, then return true.
+    if(n1==0 && n2==0 && n3==0) {
+        return true;
+    }
+
+    //If the length of "c" is not equal to the sum of the length of "a" and "b", then return false.
+    if(n1 + n2 != n3) {
+        return false;
+    }
+ 
+    if(n1 > 0 && n2 > 0 && n3 > 0 && a[n1 - 1] == c[n3 - 1] && b[n2 - 1] == c[n3 - 1]){
+        return isInterleaveUtil(a, b, c, n1 - 1, n2, n3 - 1) || isInterleaveUtil(a, b, c, n1, n2 - 1, n3 - 1);
+    }
+
+    else if(n1 > 0 && n3 > 0 && a[n1 - 1] == c[n3 - 1]){
+        return isInterleaveUtil(a, b, c, n1 - 1, n2, n3 - 1);
+    }
+
+    else if(n2 > 0 && n3 > 0 && b[n2 - 1] == c[n3 - 1]){
+        return isInterleaveUtil(a, b, c, n1, n2 - 1, n3 - 1);
+    }
+
+    //If the last character of "c" matches neither with the last character of "a" nor with the last character of "b", then we simply return false.
+    else{
+        return false;
+    }
+}
+
+
+bool isInterleave(string a, string b, string c){
+
+    int n1 = a.length(), n2 = b.length(), n3 = c.length();
+
+    //Call the util function passing each string along with their lengths as arguments.
+    return isInterleaveUtil(a, b, c, n1, n2, n3);
+}
