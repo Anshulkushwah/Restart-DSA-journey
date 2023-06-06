@@ -1,0 +1,37 @@
+
+	    void solve(string s,vector<string>&ans,int index){
+	       // base case
+	        if(index==s.size()-1){
+	            ans.push_back(s);
+	            return;}
+	            
+	        for(int j=index; j<s.size(); j++){
+	            swap(s[index],s[j]);
+	            solve(s,ans,index+1);
+	            
+	           // backtracking
+	           swap(s[index],s[j]);
+	        }
+	        
+	    }
+	    
+		vector<string>find_permutation(string S)
+		{
+		    // Code here there
+		    vector<string>ans;
+		    int index = 0;
+		    solve(S,ans,index);
+		    
+		  //  because of question ask in lexicographically sorted order.
+		    sort(ans.begin(),ans.end());
+		    
+		  //   print all unique permutations
+		    vector<string>uniq_str_ans;
+		    uniq_str_ans.push_back(ans[0]);
+		    
+		    for(int i=1;i<ans.size();i++){
+		        if(ans[i]!=ans[i-1]) uniq_str_ans.push_back(ans[i]); }
+		    
+		    return uniq_str_ans;
+		    
+		}
