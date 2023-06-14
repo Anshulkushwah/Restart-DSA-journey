@@ -1,0 +1,108 @@
+#include <iostream>
+
+using namespace std;
+
+
+class Node
+{
+
+public:
+  int data;
+  Node *next;
+
+  // constructor
+    Node (int data)
+  {
+    this->data = data;
+    this->next = NULL;
+  }
+
+
+
+};
+
+void
+insertAtTail (Node * &tail, int d)
+{
+  // step 1 : 
+  Node *newNode = new Node (d);
+  //step 2 : 
+  tail->next = newNode;
+  //step 3 : 
+  tail = newNode;
+}
+
+void
+traverse (Node * &head)
+{
+  Node *temp = head;
+  while (temp != NULL)
+    {
+      cout << temp->data << " ";
+      temp = temp->next;
+    }
+
+  cout << endl;
+
+
+}
+
+Node* reverseIn_K_Group(Node * &head, int k){
+    
+    //Empty list 
+    if (head == NULL) return NULL;
+    
+    Node* curr = head;
+    Node* next = NULL;
+    Node* prev = NULL;
+    
+    int count = 0;
+    
+    // reverse first k Nodes
+    while (curr != NULL && count < k) {
+        next = curr -> next;
+        curr -> next = prev;
+        
+        prev = curr;
+        curr = next;
+        count++;
+    }
+    
+    //next pointer will be pointing at the head of the remaining list
+    
+    if(next != NULL){ // apan is condition ko hata skte hai 
+    
+    // step 2 : recursion will get ans for remaining list
+       Node * rem   = reverseIn_K_Group(next , k);
+    
+    //step 3 : connection list int step 1 and step 3
+    head -> next = rem;
+}
+    // step 4 return head of entire list
+    return prev;
+}
+
+
+int
+main ()
+{
+  //  object creation
+  Node *first = new Node (3);
+  Node *head = first;
+  Node *tail = first;
+
+  insertAtTail (tail, 5);
+  insertAtTail (tail, 7);
+  insertAtTail (tail, 9);
+  insertAtTail (tail, 11);
+  insertAtTail (tail, 13);
+  insertAtTail (tail, 14);
+  insertAtTail (tail, 15);
+  
+traverse (head);
+head = reverseIn_K_Group(head,3);
+cout<<"After funtion applied "<<endl;
+traverse (head);
+
+  return 0;
+}
