@@ -1,0 +1,65 @@
+
+#include <iostream>
+
+using namespace std;
+
+class Node{
+    public:
+    int data;
+    Node* next;
+    
+    // constructor
+    Node (int data){
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+    
+    void insertAtTail(Node* &tail, int d){
+        // step 1 : create new node
+        Node* temp = new Node(d);
+        // step 2 : set next pointer to head Node
+        tail->next = temp;
+        // step 3  : head updates
+        tail = temp;
+    }
+
+// linklist circular or not
+bool isCircular(Node* &head){
+    Node* temp = head ;
+    
+    while(temp != NULL){
+        if(temp -> next == head ){
+            return true ;
+        }
+        temp = temp -> next; 
+    }
+    
+    return false ;
+}
+
+
+int main()
+{
+    Node* b = new Node(3);
+    Node* head = b;
+    Node* tail = b;
+    
+    insertAtTail(tail,5);
+    insertAtTail(tail,7);
+    insertAtTail(tail,9);
+    insertAtTail(tail,11);
+    
+      cout<< " Circular or not (0/1) = "<< isCircular(head)<< endl;
+
+    // to make Circular 
+
+    head -> next = head;
+
+
+   cout<< " Circular or not (0/1) = "<< isCircular(head)<< endl;
+
+
+    return 0;
+}
