@@ -1,0 +1,59 @@
+
+// get middle linklist
+
+#include <iostream>
+
+using namespace std;
+
+class Node{
+    public:
+    int data;
+    Node* next;
+    
+    // constructor
+    Node (int data){
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+    void insertAtTail(Node* &tail, int d){
+        // step 1 : create new node
+        Node* temp = new Node(d);
+        // step 2 : set next pointer to head Node
+        tail->next = temp;
+        // step 3  : head updates
+        tail = temp;
+    }
+  
+ 
+ Node* getMiddle(Node* head){
+     Node* slow = head;
+     Node* fast = head;
+     
+     while(fast!= NULL && fast->next != NULL){
+        //  2 step fast
+         fast = fast->next->next;
+        //  1 step slow 
+         slow = slow -> next;
+     }
+     return slow;
+ }
+
+int main()
+{
+    Node* b = new Node(3);
+    Node* head = b;
+    Node* tail = b;
+    
+    insertAtTail(tail,5);
+    insertAtTail(tail,7);
+    insertAtTail(tail,9);
+    insertAtTail(tail,11);
+    
+    Node* middle = getMiddle(head);
+    
+    cout<< "middle is " << middle->data ;
+
+    return 0;
+}
