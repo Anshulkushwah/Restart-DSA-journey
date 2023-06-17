@@ -1,0 +1,97 @@
+#include <iostream>
+
+using namespace std;
+
+class Node{
+    public:
+    int data;
+    Node* next;
+    
+    // constructor
+    Node (int data){
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+    // void insertAtHead(Node* &head, int d){
+    //     // step 1 : create new node
+    //     Node* temp = new Node(d);
+    //     // step 2 : set next pointer to head Node
+    //     temp->next = head;
+    //     // step 3  : head updates
+    //     head = temp;
+    // }
+    
+    void insertAtTail(Node* &tail, int d){
+        // step 1 : create new node
+        Node* temp = new Node(d);
+        // step 2 : set next pointer to head Node
+        tail->next = temp;
+        // step 3  : head updates
+        tail = temp;
+    }
+    
+    Node* reverseInK(Node* &head, int k){
+        // base case
+        if(head == NULL) return NULL;
+        
+        Node* curr = head;
+        Node* next = curr->next;
+        Node* prev = NULL;
+        int count = 0 ;
+        
+        // step 1 : reverse first k node 
+        while(curr != NULL && count < k){
+            next = curr->next;
+            curr->next = prev;
+            
+            prev = curr;
+            curr = next;
+            count++;
+        }
+        // next pointer pointing at the head of the remaining list;
+        if(next != NULL){
+            // step 2: recursion will ans for remaining list
+            Node* rem = reverseInK(next,k);
+            // step 3: connection list in step 1 and step 3 
+            head -> next = rem;
+            
+        }
+        
+        // step 4 : return head of entire list
+        return prev;
+        
+    }
+    
+    void traverse(Node* &head){
+        Node* temp = head;
+        while(temp != NULL){
+            cout<<temp->data<<" ";
+            temp = temp -> next;
+        }
+        cout<<endl;
+    }
+
+int main()
+{
+    Node* b = new Node(3);
+    Node* head = b;
+    Node* tail = b;
+    
+    insertAtTail(tail,5);
+    insertAtTail(tail,7);
+    insertAtTail(tail,9);
+    insertAtTail(tail,11);
+    insertAtTail(tail,12);
+    insertAtTail(tail,13);
+    insertAtTail(tail,14);
+    insertAtTail(tail,15);
+    
+    traverse(head);
+     head = reverseInK(head,3);
+    traverse(head);
+    
+    
+    return 0;
+}
