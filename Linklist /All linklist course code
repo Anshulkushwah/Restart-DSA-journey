@@ -1,0 +1,424 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+// Basic code for HOMEWORK
+// Doubly linklist
+// circular linklist
+// doubly circular linklist
+
+
+// IMP Question
+// 61. Rotate List
+// 1171. Remove Zero Sum Consecutive Nodes from Linked List
+// 2058. Find the Minimum and Maximum Number of Nodes Between Critical Points
+// intersection of linklist (try 4 approch = LOOP, VISITED FLAG, HASHING/MAP , 2 POINTER )
+// flatten linklist
+// Remove duplicates from sorted/unsorted
+// Add 1 to linklist
+// ADD two numbers using linklist
+// Clon LL with Random POINTER
+// Delete m node after n node
+// reverse alternate k node
+// THEORY QUESTION - Why quick sort prefer for arrays and why merge sort prefer for linklist
+// Palindromic patition(other imp)
+// 
+
+#include <iostream>
+
+using namespace std;
+
+class Node{
+
+    public:
+    int data;
+    Node* next;
+
+    Node(int d){
+        this->data = d;
+        this->next = NULL;   
+    }
+
+};
+
+void insertAtTail(Node* &tail, int d){
+        Node* temp = new Node(d);
+        tail->next = temp;
+        tail = temp;
+    }
+
+void insertAtHead(Node* &head, int d){
+        Node* temp = new Node(d);
+        temp->next = head;
+        head = temp;
+    }
+
+void insertAtPosition(Node* &head, int pos, int d){
+    if(pos == 1){
+        insertAtHead(head,d);
+    }
+    else{
+        //step 1 : creation of new Node
+        Node* newNode = new Node(d);
+
+        // step 2:
+        Node* prev = head;
+        int t = pos-2;
+        while(t--){
+            prev = prev->next;
+        }
+
+        // step 3: connection update
+        newNode->next = prev->next;
+        prev->next = newNode;
+    }
+}    
+
+void traverse(Node* &head){
+    Node* temp = head;
+    while(temp != NULL){
+        cout<<temp->data<<" ";
+        temp = temp ->next;
+    }
+    cout<< endl;
+}    
+
+
+void deleteNode(Node* &head, int target, int pos){
+
+    // empty list 
+    if(head == NULL){
+        return;
+    }
+
+    Node* temp = head;
+    Node* prev = NULL;
+
+    if(target == temp->data && pos == 1 ){
+        head = head->next;
+        temp -> next = NULL;
+        delete temp;
+    }
+    else{
+        while(temp != NULL && temp->data != target){
+            prev = temp;
+            temp = temp->next;
+        }
+
+        // for element not found in LL
+        if(temp ==NULL){
+            cout<< "Node not found"<<endl;
+            return;
+        }
+
+        prev->next = temp->next;
+        temp->next = NULL;
+        delete temp;
+    }
+}
+
+int getLength(Node* &head){
+    Node* temp = head;
+    int len = 0;
+    while(temp != NULL){
+        len++;
+        temp = temp->next;
+    }
+    return len;
+}
+
+Node* reverse(Node* &head){
+
+    if(head == NULL){
+        cout << "List is empty" << endl;
+        return head;
+    }
+
+    Node* curr = head;
+    Node* prev = NULL;
+
+    while(curr != NULL){
+        Node* forward = curr -> next;
+        curr->next = prev;
+
+        // aage badho
+        prev = curr;
+        curr = forward;
+
+    }
+    return prev;
+}
+
+Node* reverseRec(Node* curr, Node* prev){
+    // base case
+    if(curr == NULL){
+        return prev;
+    }
+
+    // connection change -1 case solve kr dia 
+    Node* forward = curr -> next;
+    curr->next = prev;
+
+    // baaki recursion sambhal lega 
+    return reverseRec(forward, curr);
+}
+
+ Node* getMiddle(Node* head){
+     if(head == NULL){
+         cout<<"LIST IS empty "<< endl;
+         return NULL;
+     }
+     Node* slow = head;
+     Node* fast = head;
+
+     while(fast!= NULL && fast->next != NULL){
+        //  2 step fast
+         fast = fast->next->next;
+        //  1 step slow 
+         slow = slow -> next;
+     }
+     return slow;
+ }
+
+ // linklist circular or not
+bool isCircular(Node* &head){
+    Node* temp = head ;
+
+    while(temp != NULL){
+        if(temp -> next == head ){
+            return true ;
+        }
+        temp = temp -> next; 
+    }
+
+    return false ;
+}
+
+  Node* reverseInK(Node* &head, int k){
+        // base case
+        if(head == NULL) return NULL;
+
+        Node* curr = head;
+        Node* next = curr->next;
+        Node* prev = NULL;
+        int count = 0 ;
+
+        // step 1 : reverse first k node 
+        while(curr != NULL && count < k){
+            next = curr->next;
+            curr->next = prev;
+
+            prev = curr;
+            curr = next;
+            count++;
+        }
+        // next pointer pointing at the head of the remaining list;
+        if(next != NULL){
+            // step 2: recursion will ans for remaining list
+            Node* rem = reverseInK(next,k);
+            // step 3: connection list in step 1 and step 3 
+            head -> next = rem;
+
+        }
+
+        // step 4 : return head of entire list
+        return prev;
+
+    }
+
+    Node* merge(Node* &head1, Node* &head2){
+
+        if(head1 == NULL) return head2;
+
+        if(head2 == NULL) return head1;
+
+        Node* temp1 = head1;
+        Node* temp2 = head2;
+
+        Node* dummy = new Node(-1);
+        Node* tempDummy = dummy;
+
+        while(temp1 != NULL && temp2 != NULL ){
+
+            if(temp1 -> data <= temp2 -> data) {
+                tempDummy -> next = temp1;
+                tempDummy = temp1;
+                temp1 = temp1 -> next;
+            }
+
+            else {
+                tempDummy -> next = temp2 ;
+                tempDummy = temp2;
+                temp2 = temp2 -> next;
+            }
+        }
+        //it is possible that element are left in temp1 list
+        while(temp1 != NULL){
+            tempDummy -> next = temp1;
+            tempDummy = temp1;
+            temp1 = temp1->next;
+        }
+
+        //it is possible that element are left in temp1 list
+        while(temp2 != NULL){
+            tempDummy -> next = temp2;
+            tempDummy = temp2;
+            temp2 = temp2->next;
+        }
+
+        Node* head = dummy->next;
+
+        //delete dummy Node
+        dummy->next = NULL;
+        delete dummy;
+
+        return head;
+    }
+    
+    int countKFromLast(Node* &head,int k){
+    //base case
+    if(head == NULL) return 0;
+
+    int cnt = countKFromLast(head -> next, k) + 1;
+
+    if(cnt == k)
+    cout<<"Kth Node from end is " << head -> data <<endl;
+
+    return cnt;
+}
+
+// bool detectLoop(Node* &head){
+Node* detectLoop(Node* &head){
+    
+    if(head== NULL)
+        return NULL;
+    
+    Node* slow = head;
+    Node* fast = head;
+    
+    while(fast != NULL && fast -> next != NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+        
+        if(slow == fast)
+            return slow;
+    }
+    return NULL;
+}
+
+bool detectAndDeleteLoop(Node* &head){
+    
+    // base case
+    if(head == NULL) return false;
+    
+    // step 1 : detect if loop is present or not
+    Node* fast = detectLoop(head);
+    
+    // step 2: detect beginning Node
+    Node* slow = head;
+    
+    while(fast != slow){
+        slow = slow->next;
+        fast = fast->next;
+    }
+    
+    Node* beginningNode = slow;
+    // step 3 : remove the loop connection
+    Node* temp = beginningNode;
+    
+    while(temp->next != beginningNode){
+        temp=temp->next;
+    }
+    temp->next = NULL;
+    
+    return true;
+    
+}
+
+
+int main()
+{
+    Node* b = new Node(3);
+    Node* head = b ;
+    Node* tail = b;
+
+    // insertAtHead(head,5);
+    // insertAtHead(head,7);
+    // insertAtHead(head,9);
+    // insertAtHead(head,11);
+    // insertAtHead(head,13);
+    // insertAtHead(head,14);
+    // insertAtHead(head,15);
+    // traverse(head);
+   
+
+    insertAtTail(tail,5);
+    insertAtTail(tail,7);
+    Node* temp = tail;
+    insertAtTail(tail,9);
+    insertAtTail(tail,11);
+    // traverse(head);
+    tail->next = temp;
+    
+    
+    cout<< detectAndDeleteLoop(head);
+    traverse(head);
+
+    // insertAtPosition(head,6,12);
+    // traverse(head);
+
+    // Node* head2 = NULL;
+    // deleteNode(head2,13,1);
+    // traverse(head);
+
+    // cout << "Length of LL : "<<getLength(head)<<endl;
+
+    // head = reverse(head);
+    // traverse(head);
+
+    // head = reverseRec(head, NULL);
+    // traverse(head);
+
+//      Node* middle = getMiddle(head);
+
+//     cout<< "middle is " << middle->data ;
+
+//      cout<< " Circular or not (0/1) = "<< isCircular(head)<< endl;
+
+//     // to make Circular 
+
+//     head -> next = head;
+
+
+//   cout<< " Circular or not (0/1) = "<< isCircular(head)<< endl;
+
+    //  traverse(head);
+    //  head = reverseInK(head,3);
+    //  traverse(head);
+
+    // Node* head1 = new Node(1);
+    // Node* tail1 = head1;
+    // insertAtTail(tail1,3);
+    // insertAtTail(tail1,5);
+
+    // traverse(head1);
+
+    // Node* head2 = new Node(2);
+    // Node* tail2 = head2;
+    // insertAtTail(tail2,4);
+    // insertAtTail(tail2,6);
+    // insertAtTail(tail2,8);
+    // insertAtTail(tail2,10);
+
+    // traverse(head2);
+
+    // Node* head = merge (head1, head2);
+    // traverse(head);
+
+//   countKFromLast(head,2);
+
+    return 0;
+}
