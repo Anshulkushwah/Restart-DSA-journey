@@ -1,107 +1,124 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
 #include <iostream>
 
 using namespace std;
 
-class Node{
+class Node {
     public:
-    int data;
+    
+    int data ;
     Node* next;
     
-    // constructor
-    Node (int data){
-        this->data = data;
+    Node(int d){
+        this->data = d;
         this->next = NULL;
     }
 };
 
-    void insertAtHead(Node* &head, int d){
-        // step 1 : create new node
-        Node* temp = new Node(d);
-        // step 2 : set next pointer to head Node
-        temp->next = head;
-        // step 3  : head updates
-        head = temp;
+void insertAtHead(Node* &head, int d){
+    Node* newNode = new Node(d);
+    newNode->next=head;
+    head = newNode;
+}
+
+void traverse(Node* &head){
+     Node* temp = head;
+     
+     while(temp!= NULL){
+        cout<<temp->data<<" ";
+        temp= temp->next;
+     }
+     
+     cout << endl;
+}
+
+int getLength(Node* &head){
+    Node* temp = head;
+    int count = 0;
+    while(temp != NULL){
+        count++;
+        temp = temp->next;
     }
     
-    void insertAtTail(Node* &tail, int d){
-        // step 1 : create new node
-        Node* temp = new Node(d);
-        // step 2 : set next pointer to head Node
-        tail->next = temp;
-        // step 3  : head updates
-        tail = temp;
+    return count;
+}
+
+void insertAtTail(Node* &tail,int d){
+    Node* newNode = new Node(d);
+    tail->next= newNode;
+    tail = newNode;
+}
+
+
+void insertAtPosition(Node* &head,Node* &tail,int pos, int d){
+    
+    Node* temp = head;
+    int lenth = getLength(head);
+    
+    if(lenth < 1 ) cout<<"empty linklist"<<endl ;
+    
+    if( pos > lenth+1 || pos < 1){
+        cout<<"invalid input"<<endl;
+        return;
     }
     
-    int getlen(Node* head){
-        int count = 0;
-        Node* current = head;
-        while(current != NULL){
-            count++;
-            current = current->next;
-        }
-        return count;
+    // insert at 1 position 
+    if(pos == 1 ){
+        insertAtHead(head,d);
+        return;
+    };
+    
+    // traverse for position
+    int t = pos - 2 ;
+    while(t--){
+        temp = temp->next;
     }
     
-    void insertAtPos(Node* &head, Node* &tail, int pos, int d){
-        
-        if (pos>getlen(head)+1){ //this is used for edge case
-            cout<<"invalid position"<<endl;
-            return;
-        }
-        
-        else if (pos == getlen(head)+1 ){ // this is used for edge case
-            insertAtTail(tail,d); 
-            
-        } 
-        
-       else if(pos == 1 ){
-            insertAtHead(head,d);
-        }
-        
-        else {
-            // step 1 : creation of New Node
-            Node* newNode = new Node(d);
-            
-            // step 2 
-            Node* prev = head;
-            int t = pos-2;
-            while(t--){
-                prev = prev->next;
-            }
-            
-            // step 3 : connection update 
-            newNode->next = prev->next;
-            prev->next = newNode;
-            
-        }
+    // insert at last position
+    if(temp->next== NULL){
+        insertAtTail(tail,d);
+        return;
     }
     
-    void traverse(Node* &head){
-        Node* temp = head;
-        while(temp != NULL){
-            cout<<temp->data<<" ";
-            temp = temp -> next;
-        }
-        cout<<endl;
-    }
+    // creating a node and joint
+    Node* newNode = new Node(d);
+    newNode->next= temp->next;
+    temp->next=newNode;
+    
+    
+}
 
 int main()
-{
-    Node* b = new Node(3);
+{   Node* b = new Node(3);
+    
     Node* head = b;
+    // insertAtHead(head,4);
+    // insertAtHead(head,5);
+    // insertAtHead(head,6);
+    // insertAtHead(head,7);
+    // insertAtHead(head,8);
+    
+    // traverse(head);
+    
     Node* tail = b;
-    
-    insertAtTail(tail,5);
-    insertAtTail(tail,7);
     insertAtTail(tail,9);
+    insertAtTail(tail,10);
     insertAtTail(tail,11);
+    insertAtTail(tail,12);
+    insertAtTail(tail,14);
     
     traverse(head);
-
     
-    insertAtPos(head,tail,7,12);
-    
+    insertAtPosition(head,tail,7,20);
     traverse(head);
+    
 
     return 0;
 }
