@@ -1,0 +1,62 @@
+
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+void printMiddle(stack<int> &st, int totalsize ){
+    // edge case
+    if(totalsize == 0) return;
+    
+    
+    // base case
+    if((totalsize/2)+1 == st.size()){
+        cout<<"Middle is "<< st.top()<<endl;
+        return;
+    }
+    
+    // step 1 
+    int topElement = st.top();
+    st.pop();
+   
+    // step 2
+    printMiddle(st,totalsize);
+    
+    // step 3
+    st.push(topElement);
+}
+
+
+int main()
+{   
+    stack<int>st;
+    
+    st.push(4);
+    st.push(3);
+    st.push(6);
+    st.push(7);
+    st.push(8);
+    st.push(9);
+    
+    // int n = st.size();
+    // int mid  = n/2;
+        
+        
+    // while(mid--){
+    //     st.pop();
+    // }
+    
+    // cout<< st.top();
+    int totalsize = st.size();
+    printMiddle(st, totalsize);
+
+    return 0;
+}
