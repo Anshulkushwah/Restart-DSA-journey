@@ -1,0 +1,99 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+class Stack{
+    public:
+    int* arr;
+    int size;
+    int top;
+    
+    Stack(int size){
+        arr = new int[size];
+        this->size = size;
+        top = -1;
+    }
+    
+    void push(int d){
+        if(top == size){
+            cout<<"Stack is overflow for element : "<<d<<endl;
+        }
+        top++;
+        arr[top]=d;
+    }
+    
+    void pop(){
+        if(top == -1){
+            cout<<"Stack is under flow "<< endl;
+            return;
+        }
+        top--;
+    }
+    
+    int getSize(){
+        // return this->size;
+        return this->top+1;
+    }
+    
+    bool isEmpty(){
+        if (top == -1){
+            return true;
+        }
+        else 
+            return false;
+    }
+    
+    int getTop(){
+        if(top != -1){
+        return arr[top];
+        }
+        else
+            return -1;
+    }
+    
+};
+
+int main()
+{
+//     // creation 
+//     stack<int>st;
+    
+//     // insertion
+//     st.push(1);
+//     st.push(2);
+//     st.push(3);
+
+//   //check size
+//   cout<<st.size()<<endl;
+   
+//   //check empty or not 
+//   cout<<st.empty()<<endl;
+   
+//   //top element
+//   cout<<st.top()<<endl;
+   
+//   //remove
+//   st.pop();
+   
+//   // check top element after remove
+//   cout<<st.top()<<endl;
+
+    Stack* st = new Stack(10);
+    st->push(1);
+    st->push(2);
+    st->push(3);
+    
+    st->pop();
+    cout<<st->getSize()<<endl;
+
+    return 0;
+}
