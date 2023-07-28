@@ -1,0 +1,37 @@
+
+void insertAtBottom(stack<int> &st, int item){
+    // base case
+    if(st.empty()){
+        st.push(item);
+        return;
+    }
+    
+    // step 1
+
+    int topElement = st.top();
+    st.pop();
+    
+    // step 2
+
+    insertAtBottom(st,item);
+    
+    // step 3
+
+    st.push(topElement);
+}
+
+void reverse(stack<int> &st){
+    // base case
+    if(st.empty()) return;
+    
+    // step 1
+
+    int topElement = st.top();
+    st.pop();
+    
+    // step2
+    reverse(st);
+    
+    // step 3 
+    insertAtBottom(st,topElement);
+}
