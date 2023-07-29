@@ -1,0 +1,64 @@
+
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+void sortedInsert(stack<int> &st,int data){
+    // base case
+    if(st.empty() or data>st.top()){
+        st.push(data);
+        return;
+    }
+    
+    int TopElement = st.top();
+    st.pop();
+    
+    // recursive call
+    sortedInsert(st,data);
+    
+    st.push(TopElement);
+    
+}
+
+void sortStack(stack<int> &st){
+    
+    // base case
+    if(st.empty()){
+        return;
+    }
+    
+    int TopElement = st.top();
+    st.pop();
+    
+    // recursive call
+    sortStack(st);
+    
+    // sortInsert
+    sortedInsert(st,TopElement);
+    
+    
+}
+
+int main()
+{
+    stack<int>st;
+    
+    st.push(2);
+    st.push(1);
+    st.push(4);
+    st.push(3);
+    
+    // function call 
+    sortStack(st);
+    
+    cout<<"printing answer "<< endl;
+    
+    while(!st.empty()){
+        cout<<st.top()<<" "<<" ";
+        st.pop();
+    }
+    cout<< endl;
+    
+    return 0;
+}
