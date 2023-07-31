@@ -1,0 +1,79 @@
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+bool knows(int a, int b, int arr[4][4]){
+    return arr[a][b];
+}
+
+int findCelebrity(int arr[4][4], int n){
+    stack<int>s;
+    
+    for(int i=0; i<n; i++){
+        // step 1: push all element in the stack
+        s.push(i);
+    }
+    
+    // find  candidate for Celebritye
+    while(s.size()>1){
+        int first = s.top();
+        s.pop();
+        
+        int second = s.top();
+        s.pop();
+        
+        if(knows(first,second,arr)){
+            s.push(second);
+        }
+        else{
+            s.push(first);
+        }
+    }
+    
+    // store candidate
+    int candidate = s.top();
+    
+    // verification of candidate
+    
+    // check row for all 0's
+    bool checkRow = true;
+    
+    for(int i=0; i<n; i++){
+        if(arr[candidate][i] == 1){
+            checkRow = false;
+            break;
+        }
+    }
+    
+    // check col for all 1's except row==col wala case
+    bool checkCol = true;
+    
+    for(int i=0; i<n; i++){
+        if(i!=candidate && arr[i][candidate] == 0){
+            checkCol = false;
+            break;
+        }
+    }
+    
+    // if verification succeds, candidate is a Celebrity 
+    if(checkRow && checkCol)
+            return candidate;
+    else
+        return -1;
+}
+
+
+int main()
+{
+    int arr[4][4] = {
+                    {0,0,1,0},
+                    {0,0,1,0},
+                    {0,0,0,0},
+                    {0,0,1,0}
+    };
+    
+    cout<<"celeb is " <<findCelebrity(arr,4)<<endl;
+
+    return 0;
+}
