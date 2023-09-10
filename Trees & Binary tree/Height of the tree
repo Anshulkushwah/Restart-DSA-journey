@@ -1,0 +1,63 @@
+
+#include <iostream>
+#include <queue>
+using namespace std;
+
+class Node{
+    public:
+    
+        int data;
+        Node* left;
+        Node* right;
+        
+    Node(int d){
+            data = d;
+            left = NULL;
+            right = NULL;
+        }
+};
+
+Node* buildTree(){
+    
+    cout<<"Enter the value of data "<<endl;
+    int data;
+    cin>>data;
+    
+    if(data == -1)
+        return NULL;
+    
+    
+    Node* newNode = new Node(data);
+    
+    cout<<" Checking left child "<<endl;
+    
+    newNode->left = buildTree();
+    
+    cout<<" Checking right child "<<endl;
+    
+    newNode->right = buildTree();
+    
+    return newNode;
+    
+}
+
+int height (Node *root){
+    if(root==NULL) return 0;
+    
+    if(root->left == NULL && root->right ==NULL) return 0;
+    
+    int leftAns = height(root->left);
+    int rightAns = height(root->right);
+    
+    return 1+max(leftAns,rightAns);
+}
+
+int main()
+{
+    Node* root = NULL;
+    root = buildTree();
+    
+   cout<<"Height : " <<height(root);
+
+    return 0;
+}
