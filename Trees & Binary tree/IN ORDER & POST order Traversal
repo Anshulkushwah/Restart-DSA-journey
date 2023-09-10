@@ -1,0 +1,96 @@
+
+
+#include <iostream>
+
+using namespace std;
+
+class Node{
+    public:
+    
+        int data;
+        Node* left;
+        Node* right;
+        
+    Node(int d){
+            data = d;
+            left = NULL;
+            right = NULL;
+        }
+};
+
+Node* buildTree(){
+    
+    cout<<"Enter the value of data "<<endl;
+    int data;
+    cin>>data;
+    
+    if(data == -1)
+        return NULL;
+    
+    
+    Node* newNode = new Node(data);
+    
+    cout<<" Checking left child "<<endl;
+    
+    newNode->left = buildTree();
+    
+    cout<<" Checking right child "<<endl;
+    
+    newNode->right = buildTree();
+    
+    return newNode;
+    
+}
+
+// IN ORDER TRAVERSAL (NLR)
+void preOrder(Node* &root){
+    // base case
+    if(root == NULL){
+        return;
+    }
+    
+
+    
+    // L
+    preOrder(root->left);
+    
+    // N
+    cout<< root->data<<endl;
+    
+    // R
+    preOrder(root->right);
+    
+}
+
+
+// Post ORDER TRAVERSAL (NLR)
+void preOrder(Node* &root){
+    // base case
+    if(root == NULL){
+        return;
+    }
+    
+
+    
+    // L
+    preOrder(root->left);
+    
+     // R
+    preOrder(root->right);
+    
+    // N
+    cout<< root->data<<endl;
+    
+   
+    
+}
+
+int main()
+{
+    Node* root = NULL;
+    root = buildTree();
+    
+    preOrder(root);
+
+    return 0;
+}
