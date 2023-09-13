@@ -1,0 +1,37 @@
+class Solution {
+public:
+
+    int position(vector<int>in, int key,int s,int e){
+        for(int i = s; i<=e; i++){
+            if(in[i] == key)
+                return i;
+        }
+        return -1;
+    }
+
+    TreeNode* buildTREE(vector<int>& in,vector<int>& post,int &postOrderIndex, int inStart, int inEnd){
+
+        // Base case 
+        if(postOrderIndex < 0 || inStart > inEnd){
+            return NULL;
+        }
+
+        int element = post[postOrderIndex--];
+        TreeNode* root = new TreeNode(element);
+
+        // search element in inorder array
+        int pos = position(in, element,inStart,inEnd);
+        root->right = buildTREE(in,post, postOrderIndex,pos+1,inEnd);
+        root->left = buildTREE(in,post, postOrderIndex,inStart,pos-1);
+        
+        return root;
+
+    }
+
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        
+        int index = postorder.size()-1;
+        TreeNode* root = buildTREE(inorder,postorder,index,0,inorder.size()-1);
+        return root;
+    }
+};
