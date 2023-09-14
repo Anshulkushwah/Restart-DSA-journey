@@ -1,0 +1,101 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <queue>
+using namespace std;
+
+class Node{
+    public:
+        int data;
+        Node* left;
+        Node* right;
+        
+    Node(int d) {
+        this->data = d;
+        left = NULL;
+        right = NULL;
+        
+    }    
+};
+
+Node* buildBST(Node* root , int data){
+    if(root == NULL){
+        Node* temp = new Node( data);
+        return temp;
+    }
+    
+    if(data>root->data){
+        root->right = buildBST(root->right,data);
+    }
+    
+    else{
+        root->left = buildBST(root->left,data);
+}
+
+return root;
+}
+void createBST(Node* &root){
+    cout<<" Enter value for root Node" <<endl;
+    
+    int data;
+    cin>>data;
+    
+    while(data!=-1){
+        root = buildBST(root,data);
+        cin>>data;
+    }
+}
+
+// LEVEL ORDER TRAVERSAL
+void lvlOrderTraversal(Node* &root){
+    
+    queue<Node*>q;
+    q.push(root);
+    q.push(NULL);
+    
+    while(!q.empty()){
+        
+        Node* front = q.front();
+        
+        // tu nikal
+        q.pop();
+        
+        if(front == NULL){
+            cout<<endl;
+            // catch
+            if(!q.empty())
+            // still element available
+            q.push(NULL);
+        }
+        
+        else{
+        cout<<front->data<<" ";
+        
+        // bachhe chod ja
+        if(front->left != NULL)
+            q.push(front->left);
+            
+        if(front->right != NULL)
+            q.push(front->right);
+            
+            
+        
+    }
+    } 
+}
+
+int main()
+{
+    Node* root = NULL;
+    createBST(root);
+    
+    lvlOrderTraversal(root);
+     
+    return 0;
+}
