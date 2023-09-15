@@ -1,0 +1,16 @@
+ bool searchBST(TreeNode* root, int target) {
+
+        if(root == NULL) return false;
+
+        if(target == root->val) return true;
+
+        if(target < root->val){
+            bool leftAns = searchBST(root->left,target);
+            if(leftAns == true) return true; 
+        }
+        else{
+            boolAns = search(root->right,target){
+                if(rightAns == true) return true;
+            }
+        return false;    
+        }
