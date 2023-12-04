@@ -1,0 +1,40 @@
+
+int getMinCostRopes(int arr[],int n){
+    // initialise cost with 0
+    int cost = 0;
+    
+    // create a min min_Heap
+    priority_queue<int,vector<int>,greater<int>>min_Heap;
+    
+    // insert all array element into min_Heap
+    
+    for(int i=0; i<n; i++){
+        min_Heap.push(arr[i]);
+    }
+    
+    while(min_Heap.size()>1){
+        // fetch 2 minimum element and put their sum in cost and put element back in min_Heap 
+        
+        int first = min_Heap.top();
+        min_Heap.pop();
+        
+        int second = min_Heap.top();
+        min_Heap.pop();
+        
+        int sum = first + second;
+        cost = cost+sum;
+        
+        min_Heap.push(sum);
+    }
+    return cost;
+}
+
+int main()
+{
+    int arr[]= {4,3,2,6};
+    int n = 4;
+    
+    cout<<getMinCostRopes(arr,n);
+
+    return 0;
+}
