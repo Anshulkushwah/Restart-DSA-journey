@@ -1,0 +1,86 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <map>
+#include <list>
+#include <queue>
+
+using namespace std;
+
+
+class Graph{
+    public:
+        map<int,list<int>>adjList;
+
+        void addEdge(int u, int v, bool direction ){
+            adjList[u].push_back(v);
+
+            if(direction == 0){
+                adjList[v].push_back(u); 
+            }
+        }
+        
+        
+
+        bool isCyclicBfs(int src, map<int,bool>&visited){
+            map<int,int>Parent;
+            queue<int>q;
+            q.push(src);
+            visited[src] = true;
+            Parent[src] = -1;
+
+            while(!q.empty()){
+                int front = q.front();
+                q.pop();
+
+                for(auto neigh : adjList[front]){
+
+                    //  neigh already visited hai or parent nahi ho current node ka 
+                    if(visited[neigh] == true && neigh !=Parent[front] ) return true;
+
+                    else if (!visited[neigh]){
+                        q.push(neigh);
+                        visited[neigh] = true;
+                        Parent[neigh] = front;
+                    }
+                }
+
+            }
+
+            return false;
+        }
+
+        
+
+};
+
+int main() {
+    // Write C++ code here
+    Graph g;
+
+    g.addEdge(0,2,0);
+    g.addEdge(2,3,0);
+    g.addEdge(2,4,0);
+    g.addEdge(3,4,0);
+    g.addEdge(1,3,0);
+
+//  //   for disconnected
+//     g.addEdge(5,6,0);
+
+
+map<int,bool>visited;
+
+
+// for connected
+   cout<< g.isCyclicBfs(0,visited);
+
+    // for disconnected graph
+    // int n = 7 ; // n value given on question
+
+    // for(int i = 0 ; i<n; i++){
+    //     if(!visited[i]){
+    //         g.dfs(i,visited);
+    //     }
+    // }
+
+    return 0;
+}
