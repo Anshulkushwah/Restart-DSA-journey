@@ -1,0 +1,82 @@
+// Online C++ compiler to run C++ program online
+#include <iostream>
+#include <map>
+#include <list>
+#include <queue>
+
+using namespace std;
+
+
+class Graph{
+    public:
+        map<int,list<int>>adjList;
+
+        void addEdge(int u, int v, bool direction ){
+            adjList[u].push_back(v);
+
+            if(direction == 0){
+                adjList[v].push_back(u); 
+            }
+        }
+        
+        bool isCyclicDfsDirected(int src,map<int,bool>&visited,map<int,bool>&dfsVisited){
+            visited[src] = true;
+            dfsVisited[src] = true;
+
+            for ( auto neigh : adjList[src]){
+                if(!visited[neigh]){
+                    bool cycleDetected = isCyclicDfsDirected(neigh,visited,dfsVisited);
+
+                    if(cycleDetected == true )  return true;
+                }
+
+                else if (visited[neigh] == true && dfsVisited[neigh] == true){
+                    // cycle present
+                    return true;
+                }
+            }
+
+            // backtrack
+
+            dfsVisited[src] = false;
+            return false;
+
+        }
+        
+
+};
+
+int main() {
+    // Write C++ code here
+    Graph g;
+
+    g.addEdge(0,2,0);
+    g.addEdge(2,3,0);
+    g.addEdge(2,4,0);
+    g.addEdge(2,0,0);
+    g.addEdge(4,2,0);
+    g.addEdge(4,3,0);
+    g.addEdge(3,2,0);
+    g.addEdge(3,4,0);
+    g.addEdge(3,1,0);
+ 
+//  //   for disconnected
+//     g.addEdge(5,6,0);
+map<int,bool>visited;
+map<int,bool>dfsVisited;
+
+// for connected
+cout<< g.isCyclicDfsDirected (0,visited,dfsVisited);
+
+    // for disconnected graph
+    // int n = 7 ; // n value given on question
+    // for(int i; i<n; i++){
+
+    //     if(!visited[i]){
+    //         bool ans = isCyclicDfs(i,-1,visited);
+    //         if(ans == true) return true;
+    //     }
+    // }
+
+    return 0;
+}
