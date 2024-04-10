@@ -1,0 +1,22 @@
+void recursiveFunction(int x, vector<int>& ans, int n) {
+    // Insert element in the array
+    ans.push_back(x);
+
+    if(x == n) {
+        return;
+    }
+    
+    // Call recursive function
+    return recursiveFunction(x + 1, ans, n);
+    
+}
+
+vector<int> printNos(int x) {
+    // Declaring empty integer array
+    vector<int> ans;
+    
+    // Calling recursive function
+    recursiveFunction(1, ans , x);
+    
+    return ans;
+}
