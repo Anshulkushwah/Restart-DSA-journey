@@ -1,0 +1,29 @@
+bool checkArmstrong(int n){
+
+	//Write your code here
+    int power=0;
+    int tempValue=n;
+	long long int sum=0;
+
+	// check how much digit
+    while(tempValue!=0){
+        power++;
+        tempValue/=10;
+	}
+
+// initialize again with input
+    tempValue=n;
+
+// Now check the ans
+    while(tempValue!=0){
+        int digit=tempValue%10;
+        sum+=pow(digit,power);
+        tempValue/=10;
+    }
+
+// return ans
+    if(sum==n)
+        return true;
+    else
+        return false;
+}
