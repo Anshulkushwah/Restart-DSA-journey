@@ -1,0 +1,23 @@
+int isSorted(int n, vector<int> a) {
+    // Write your code here.
+
+    if(a.size()== 1) {return 1;}
+
+    int i = 0;
+
+    while( i<n-1 ){
+        int prev = i;
+        int curr = i+1;
+
+        if(a[prev] <= a[curr]){
+            i++;
+        }
+
+        else{
+            return 0;
+        }
+
+    }
+    
+    return 1;
+}
