@@ -1,0 +1,41 @@
+
+// Insert all elements of the array into an unordered_set for efficient lookup.
+// Initialize ans to 0 to keep track of the maximum length found.
+// Iterate through each element in the array:
+// If the previous element (nums[i]-1) is in the set, skip the current element.
+// If not, start a new sequence from the current element and count its length.
+// Update ans with the maximum length found.
+// The function returns ans, which is the length of the longest consecutive sequence.
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+
+        int n = nums.size();
+        unordered_set<int>s;
+        int ans = 0;
+
+        for(int i = 0; i<nums.size(); i++){
+            s.insert(nums[i]);
+        }
+
+        for(int i = 0; i<nums.size(); i++){
+            if(s.find(nums[i]-1) != s.end()){
+                continue;
+            }
+
+            else{
+                int count = 0;
+                int current = nums[i];
+
+                while(s.find(current)!=s.end()){
+                    count++;
+                    current++;
+                }
+                ans = max(ans,count);
+            }
+        }
+        
+    return ans;
+        
+    }
+};
