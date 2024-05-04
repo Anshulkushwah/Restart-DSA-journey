@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int searchInsert(vector<int>& arr, int target) {
+        	// Write your code here.
+    int n = arr.size();        
+	int ans = n;
+	int high = n-1;
+	int low = 0;
+
+	while(low<=high){
+		int mid = low +(high-low)/2;
+
+		// this condition for lower bound
+		if(arr[mid]>= target){
+		// below is upper bound
+		// diffrence only EQUAL(=) 
+		// if(arr[mid]> x){
+			high = mid-1;
+			ans = mid;
+		}
+
+		else {
+			low = mid+1;
+		}
+	}
+
+	return ans;
+    }
+};
