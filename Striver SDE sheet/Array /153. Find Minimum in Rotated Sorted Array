@@ -1,0 +1,42 @@
+class Solution {
+public:
+
+
+
+    int Pivot(vector<int>& nums){
+        int n = nums.size();
+        int low = 0;
+        int high = n-1;
+
+        int mid = low + (high-low)/2;
+
+        while(low<high){
+
+            if(nums[mid]>=nums[0]){
+                low = mid+1;
+            }
+            else{
+                high = mid;
+            }
+
+            mid = low + (high-low)/2;
+        }
+
+        return low;
+    }
+
+    int findMin(vector<int>& nums) {
+
+        int n = nums.size();
+
+        int pivot = Pivot(nums);
+
+    //  one edge case input is sorted array and not rotated
+    
+        if(nums[0]<nums[n-1]) return nums[0];
+
+        return nums[pivot];
+
+        
+    }
+};
