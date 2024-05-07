@@ -1,0 +1,24 @@
+int floorSqrt(int Target)
+{
+    // Write your code here.
+    int low = 0;
+    int high = Target;
+    int ans;
+
+    while(low<=high){
+        long long int mid = low + (high-low)/2;
+        
+        long long int sqr = (mid*mid);
+
+        if(sqr == Target ) return mid;
+
+        if(sqr <= Target ){
+            ans = mid;
+            low =mid+1;
+        } 
+
+        else high = mid-1;
+    }
+
+    return ans;
+}
