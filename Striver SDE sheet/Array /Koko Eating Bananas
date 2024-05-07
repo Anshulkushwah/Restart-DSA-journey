@@ -1,0 +1,35 @@
+// Explanation:
+// ceil() Function:
+// The ceil() function returns the smallest integer that is greater than or equal to the value passed as an argument.
+// It effectively rounds up the nearest integer.
+// In your expression, ceil((double)pile / mid), the following steps occur:
+// (double)pile converts the integer variable pile to a double.
+// The division pile / mid is performed, resulting in a floating-point value.
+// The ceil() function is then applied to this result.
+
+class Solution {
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int left = 1;
+
+        // get max 
+        int right = *max_element(piles.begin(), piles.end());
+
+        while (left < right) {
+
+            int mid = left + (right - left) / 2;
+            int total_hours = 0;
+
+            for (int pile : piles) {
+                total_hours += ceil((double)pile / mid);
+            }
+            if (total_hours > h) {
+                left = mid + 1;
+            }
+             else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+};
