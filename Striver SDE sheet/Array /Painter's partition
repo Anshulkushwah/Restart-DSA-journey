@@ -1,0 +1,54 @@
+//All 3 question have same code just copy paste
+// Book Allocation Problem
+// Split array - Largest Sum
+// Painter's partition
+
+bool checkmin(vector<int>boards,int mid,int n,int k){
+
+    int countpainter = 1;
+    int currSum =0;
+
+    for(int i =0; i <n; i++){
+
+        if(currSum+boards[i] <= mid){
+            currSum+=boards[i];
+            // cout<<" countpainter "<<countpainter<<" currsum "<<currSum<<endl;
+        }
+        else{
+            countpainter++;
+            currSum = boards[i];
+            // cout<<"ELSE countpainter "<<countpainter<<" currsum "<<currSum<<endl;
+            if(countpainter>k || boards[i]>mid) return false;
+        }
+    }
+    return true;
+}
+
+int findLargestMinDistance(vector<int> &boards, int k)
+{
+    //    Write your code here.
+
+    int  sum = 0;
+    int n = boards.size();
+
+    for(int i = 0; i<n; i++){
+        sum+=boards[i];
+    }
+
+    int low = 0;
+    int high = sum;
+    int ans = -1;
+
+    while(low<=high){
+        int mid = low + (high-low)/2;
+
+        if(checkmin(boards,mid,n,k) == true) {
+            ans = mid;
+            high=mid-1;
+        }
+
+        else low = mid+1;
+    }
+
+    return  ans;
+}
