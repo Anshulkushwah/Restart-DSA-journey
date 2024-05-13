@@ -1,0 +1,47 @@
+// Then we need to basically reverse the map to make the keys of the first map as the values of the second key and vice-versa.
+// We do this using a map of integers and vector of strings.
+// We also use the negative of the number of occurences to get the map in the sorted order; because maps store the keys in ascending order, so if we take the negative of the numbers, we get the order we want.
+
+// For example,
+
+// First map : {'a':2,'b':1,'c':2};
+// Second map : {-2 : {'a','c'} , -1 : {'b}};
+
+// So, we get it in descending order.
+
+// for (auto value:m){
+//     m2[-value.second].push_back(value.first);
+// }
+
+
+class Solution {
+public:
+    string frequencySort(string s) {
+        map<char,int> m;
+        map<int,vector<char> > m2;
+
+        for (auto value:s){
+            m[value]++;
+        }
+
+        for (auto value:m){
+            m2[-value.second].push_back(value.first);
+        }
+        
+        string res = "";
+        
+        for (auto value:m2){
+            for (auto value1:value.second){
+                string temp = "";
+// -value.first is the negation of value.first, which converts the negative frequency back to a positive number.
+                for (int i = 0 ; i < -value.first ; i++){
+                    temp +=  value1;
+                }
+                res += temp;
+            }
+        }
+
+        return res;
+        
+    }
+};
