@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+
+// first solution
+// void Sum(int n,long long int &ans,int count){
+//     if(count>n) return;
+//     ans+=count;
+//     Sum(n,ans,count+1);
+// }
+
+// long long int firstN(int n) {
+//     // Write your code here.
+
+//     long long int ans =0;
+//     Sum(n,ans,1);
+
+//    return ans;
+// }
+
+// second solution
+// long long int firstN(int n) {
+//     // Write your code here.
+//      if(n==0) return 0;
+//     return n + firstN(n-1);
+// }
