@@ -1,0 +1,12 @@
+int factorial(int n){
+   
+   // Base Condition.
+   if(n == 0)
+   {
+       return 1;
+   }
+
+   // Problem broken down into 2 parts and then combined.
+   return n * factorial(n-1);
+
+}
