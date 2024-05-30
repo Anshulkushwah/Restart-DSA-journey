@@ -1,0 +1,25 @@
+	void TotalSum(int arr[], int n,int ind,int &count,int sum, int target){
+	    if(ind>=n){
+	        if(sum == target) count++;
+	        return;
+	    }
+	    
+	   // exculde
+	    TotalSum(arr,n,ind+1,count,sum,target);
+	    
+	   // indlude
+	   
+	   sum+=arr[ind];
+	   TotalSum(arr,n,ind+1,count,sum,target);
+	    
+	}
+	
+	int perfectSum(int arr[], int n, int target)
+	{
+        // Your code goes here
+        int count = 0;
+        int ind = 0;
+        int sum = 0;
+        TotalSum(arr,n,ind, count,sum,target);
+        return count;
+	}
