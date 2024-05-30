@@ -1,0 +1,62 @@
+	void TotalSum(vector<int> &arr, int n,int ind,int &count,int sum, int target){
+	    if(ind>=n){
+	        if(sum == target) count++;
+	        return;
+	    }
+	    
+	   // exculde
+	    TotalSum(arr,n,ind+1,count,sum,target);
+	    
+	   // indlude
+	   
+	   sum+=arr[ind];
+	   TotalSum(arr,n,ind+1,count,sum,target);
+	    
+	}
+
+bool isSubsetPresent(int n, int target, vector<int> &arr)
+{
+    // Write your code here
+        int count = 0;
+        int ind = 0;
+        int sum = 0;
+        TotalSum(arr,n,ind, count,sum,target);
+        
+        if(count>0) return true;
+        else false;
+}
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////
+
+
+bool sol(vector<int>&a, int k , int sum, int n, int ind){
+
+if(sum==k && ind<n) return true;
+
+if(sum>k) return false;
+
+if(ind==n && sum==k) return true;
+
+if(ind==n) return false;
+
+if(sol(a,k,sum,n,ind+1)==true)
+
+return true;
+
+sum+=a[ind];
+
+if(sol(a,k,sum,n,ind+1)==true)
+return true;
+
+return false;
+
+}
+
+bool isSubsetPresent(int n, int k, vector<int> &a)
+{
+return sol(a,k,0,n,0);
+}
