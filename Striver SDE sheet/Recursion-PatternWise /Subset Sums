@@ -1,0 +1,22 @@
+  void solve(vector<int> arr, vector<int> &output,int sum, int i){
+      
+      if(i==arr.size()) {
+          output.push_back(sum);
+          return;
+       }
+        // exclude
+      solve(arr,output,sum,i+1);
+        // include 
+      solve(arr,output,sum+arr[i],i+1);
+  }
+  
+    vector<int> subsetSums(vector<int> arr, int n) {
+        // Write Your Code here
+        
+        vector<int>output;
+        solve(arr,output,0,0);
+        
+        return output;
+        
+        
+    }
