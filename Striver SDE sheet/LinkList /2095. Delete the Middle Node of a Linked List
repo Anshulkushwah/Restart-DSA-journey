@@ -1,0 +1,37 @@
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        if(head == NULL || head->next == NULL) return NULL;
+
+        int count = 0;
+        ListNode* temp = head;
+
+        while(temp!=NULL){
+            count++;
+            temp=temp->next;
+        }
+
+        int mid = count/2;
+        temp = head;
+        // for deleting 0th node
+        if(mid==1 && count == 2){
+            ListNode* temp2=temp->next;
+            delete temp2;
+            temp->next = NULL;
+            return temp;
+        }
+        else{
+            // bcz we want to stop 1 node before for deleting        
+            mid = mid-1;
+            while(mid--){
+                temp = temp->next;
+            }
+            ListNode* nextNode = temp->next->next;
+            ListNode* deleteNode = temp->next;
+            temp->next = nextNode;
+            deleteNode = NULL;
+            delete deleteNode;
+        }
+        return head;
+    }
+};
