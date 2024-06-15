@@ -1,0 +1,133 @@
+    // void insertAtTail(Node* &head, Node* &tail, int d){
+    //     Node* newNode = new Node(d);
+    //     if(head==NULL) {
+    //         head = newNode;
+    //         tail = newNode;
+    //         return;
+    //     }
+    //     else{
+    //         tail->next = newNode;
+    //         tail = newNode;
+    //     }
+    // }
+    
+    // Node *copyList(Node *head)
+    // {
+    //     //Write your code here
+    //     Node* cloneHead = NULL;
+    //     Node* cloneTail = NULL;
+        
+    //     Node* temp = head;
+        
+    //     while(temp != NULL){
+    //         insertAtTail(cloneHead, cloneTail, temp->data);
+    //         temp = temp->next;
+    //     }
+        
+    //     // step 2 - create a map
+    //     unordered_map<Node*, Node*> oldToNew;
+        
+    //     Node* orginalNode = head;
+    //     Node* cloneNode = cloneHead;
+        
+    //     // save mapping;
+    //     while(orginalNode != NULL){
+    //         oldToNew[orginalNode] = cloneNode;
+    //         orginalNode = orginalNode->next;
+    //         cloneNode = cloneNode->next;
+    //     }
+        
+    //     orginalNode = head;
+    //     cloneNode =cloneHead;
+        
+    //     // for random pointer
+    //     // arb is random pointer
+        
+    //     while(orginalNode != NULL){
+    //         cloneNode->arb = oldToNew[orginalNode -> arb];
+    //         orginalNode = orginalNode->next;
+    //         cloneNode = cloneNode->next;
+    //     }
+        
+    //     return cloneHead;
+    // }
+    
+    ////////////////////////////////////////////////////////////////////////////////////
+    
+    void insertAtTail(Node* &head, Node* &tail, int d){
+        Node* newNode = new Node(d);
+        if(head==NULL) {
+            head = newNode;
+            tail = newNode;
+            return;
+        }
+        else{
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+    
+    
+    Node *copyList(Node *head){
+        
+    // step1 : create a clone list
+    Node* cloneHead = NULL;
+    Node* cloneTail = NULL;
+    
+    Node* temp = head;
+    while(temp!=NULL){
+        insertAtTail(cloneHead,cloneTail, temp->data);
+        temp = temp->next;
+    }
+    // step2 : cloneNodes odd in between Orginal List
+    
+    Node* orginalNode = head;
+    Node* cloneNode = cloneHead;
+    
+    while(orginalNode != NULL && cloneNode!=NULL){
+        Node* next = orginalNode->next;
+        orginalNode->next = cloneNode;
+        orginalNode = next;
+        
+        next = cloneNode->next;
+        cloneNode->next = orginalNode;
+        cloneNode = next;
+    }
+    // step3 : random pointer copy
+    
+    temp = head;
+    
+    while(temp != NULL){
+        if(temp->next != NULL){
+            // something wrong 
+            // if(temp->arb != NULL){
+            //     temp->next->arb = temp->arb->next;
+            // }
+            // else{
+            //     temp->next = temp->tandom;
+            // }
+            temp->next->arb = temp->arb ?
+                temp->arb->next :
+                    temp->arb;
+        }
+        temp = temp->next->next;
+    }
+    
+    // step4 : revert back changes
+    orginalNode = head;
+    cloneNode = cloneHead;
+    
+    while(orginalNode != NULL && cloneNode!=NULL){
+        orginalNode->next = cloneNode->next;
+        orginalNode = orginalNode->next;
+        
+        if(orginalNode != NULL){
+        cloneNode->next = orginalNode->next;
+        }
+        cloneNode = cloneNode->next;
+    }
+    
+    
+    // step5 : return ans;
+        return cloneHead;
+    }
