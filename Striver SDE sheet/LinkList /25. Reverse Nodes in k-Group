@@ -1,0 +1,36 @@
+    ListNode* reverseKGroup(ListNode* head, int k) {
+    // Empty list
+    if (head == nullptr) return nullptr;
+
+    ListNode* curr = head;
+    ListNode* prev = nullptr;
+    ListNode* next = nullptr;
+    int count = 0;
+
+    // length calculate
+    ListNode* temp = head;
+    int length = 1;
+    while(temp->next != NULL) {
+       ++length;
+       temp = temp->next;
+    }
+
+    // Reverse first k nodes
+    if(length >= k){
+        while (curr != nullptr && count < k) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count++;
+        }
+    }
+
+    else return head;
+
+    // Next pointer will be pointing at the head of the remaining list
+    // Recurse for the remaining part
+    if (next != nullptr) head->next = reverseKGroup(next, k);
+
+    return prev;
+}
