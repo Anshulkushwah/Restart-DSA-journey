@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+class Queue{
+  public:
+  
+  int * arr;
+  int front;
+  int size;
+  int rear;
+  
+  Queue(int size){
+    arr = new int(size);
+    front = 0;
+    rear = 0;
+    this->size = size;
+  }
+  
+  void push (int d){
+    if(rear == size-1){
+      cout<<"Overflow for element" << d << endl;
+      return; 
+    } 
+    else
+      arr[rear] = d;
+      rear++;
+  }
+  
+  void pop(){
+    if(front == rear) {
+      cout<<"Queue underflow for element" <<endl;
+      return;
+    }
+    else {
+      arr[front] = -1;
+      front++;
+      if(front == rear){
+        front = 0;
+        rear = 0;
+      }
+    }
+  } 
+  
+  int getsize(){
+    return rear-front;
+
+  }
+  
+  bool isEmpty(){
+    if(rear == front) return true;
+    else false;
+  }
+  
+  int getfront(){
+    if(front==rear) return -1;
+    else return arr[front];
+  }
+};
+
+int main() 
+{
+    Queue* qu = new Queue(10);
+    
+    qu->push(1);
+    qu->push(2);
+    qu->push(3);
+    qu->push(4);
+    qu->push(5);
+    
+    cout<<qu->getsize()<<endl;
+    cout<<qu->getfront()<<endl;
+    
+    return 0;
+}
