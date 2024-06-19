@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+class stack{
+  public:
+  
+  int * arr;
+  int top;
+  int size;
+  
+  stack(int size){
+    arr = new int(size);
+    top = -1;
+    this->size = size;
+  }
+  
+  void push (int d){
+    if(top == size-1){
+      cout<<"Stack overflow for element" << d << endl;
+      return ; 
+    } 
+    else
+      top++;
+      arr[top] = d;
+  }
+  
+  void pop(){
+    if(top == -1) {
+      cout<<"Stack underflow for element" <<endl;
+      return;
+    }
+    top--;
+  } 
+  
+  int getsize(){
+    return top+1; // this give how many element present in stack;
+    // return this->size; // this give total size of stack;
+  }
+  
+  bool isEmpty(){
+    if(top==-1) return true;
+    else false;
+  }
+  
+  int getTop(){
+    if(top==-1) return -1;
+    else return arr[top];
+  }
+};
+
+int main() 
+{
+    stack* st = new stack(10);
+    
+    st->push(1);
+    st->push(2);
+    st->push(3);
+    st->push(4);
+    st->push(5);
+    
+    cout<<st->getsize()<<endl;
+    cout<<st->getTop()<<endl;
+    
+    return 0;
+}
