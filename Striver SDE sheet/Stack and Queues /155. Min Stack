@@ -1,0 +1,92 @@
+THIS code run well but not all test cases
+
+stack<long int>st;
+    long long int min;
+    MinStack() {      
+    }
+    
+    void push(int val) {
+        if(st.empty()){
+            min = val;
+            st.push(val);
+        }
+        else{
+            if(val<min){
+                long  int temp = val+(val-min);
+                st.push(temp);
+                min=val;
+            }
+            else{
+                st.push(val);
+            }
+        }   
+    }
+    
+    void pop() {
+        if(!st.empty()){
+            if(st.top()<min){
+              min = 2*min-st.top();
+              st.pop();
+            }
+            else st.pop();
+        }
+        
+    }
+    
+    int top() {
+        if(st.empty()) return -1;
+        if(st.top()<min){
+              min = 2*min-st.top();
+              return min;
+            }
+       return st.top();
+    }
+    
+    int getMin() {
+        if(st.empty()) return -1;
+        return min;
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+ MinStack() {
+        
+    }
+    stack<pair<int, int>> st;
+
+    
+    void push(int val) {
+        if(st.empty()){
+            st.push({val, val});
+        }
+        else{
+            if(st.top().second<val){
+                st.push({val, st.top().second});
+            }
+            else{
+                st.push({val, val});
+            }
+        }
+        
+    }
+    
+    void pop() {
+        if(st.empty()){
+            return;
+        }
+        st.pop();
+    }
+    
+    int top() {
+        if(st.empty()){
+            return -1;
+        }
+        return st.top().first;
+    }
+    
+    int getMin() {
+         if(st.empty()){
+            return -1;
+        }
+        return st.top().second;
+    }
