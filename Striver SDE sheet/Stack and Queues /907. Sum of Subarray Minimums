@@ -1,0 +1,54 @@
+using ll = long long;
+const int MOD = 1e9 + 7;
+
+class Solution {
+public:
+    int sumSubarrayMins(vector<int>& nums) {
+        int length = nums.size();
+        vector<int> left(length, -1);
+        vector<int> right(length, length);
+
+        ///Prev smaller///        
+        stack<int> st1;
+
+        for (int i = 0; i < length; ++i) {
+            while (!st1.empty() && nums[st1.top()] >= nums[i])
+                st1.pop();
+
+            if (!st1.empty())
+                left[i] = st1.top();
+
+            st1.push(i);
+        }
+
+        ///next smaller///
+        stack<int> st2;
+
+        for (int i = length - 1; i >= 0; --i) {
+            while (!st2.empty() && nums[st2.top()] > nums[i])
+                st2.pop();
+
+            if (!st2.empty())
+                right[i] = st2.top();
+            
+            st2.push(i);
+        }
+
+        long long sum = 0;
+        long long temp1 = 0;
+        long long temp2 = 0;
+
+        for (int i = 0; i < length; ++i) {
+            //  // Subtracting left[i] from i and casting the result to long long
+            // sum += static_cast<ll>(i - left[i]) * (right[i] - i) * nums[i] % MOD;
+            // sum %= MOD;
+            temp1 = i - left[i];
+            temp2 = right[i] - i;
+            long long prod =  temp1* temp2 % MOD;
+            prod = (prod*nums[i]) % MOD;
+            sum = (sum%MOD + prod) % MOD;
+        }
+
+        return sum;
+    }
+};
