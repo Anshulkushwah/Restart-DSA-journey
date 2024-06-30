@@ -1,0 +1,40 @@
+class StockSpanner {
+public:
+
+    stack<int> stack;
+    vector<int> list;
+    int previousGreaterIndex;
+    int currentIndex;
+
+    StockSpanner() {
+        // Constructor: Initialize the stack and list
+    }
+
+    int next(int price) {
+        list.push_back(price);
+        // index = stack.top()
+        // list[index] -> value
+        while (!stack.empty() && list[stack.top()] <= price) {
+            stack.pop();
+        }
+
+        if(stack.empty())
+            previousGreaterIndex = -1;
+        else
+            previousGreaterIndex = stack.top();
+        
+        currentIndex = list.size() - 1;
+        int ans = currentIndex - previousGreaterIndex;
+        stack.push(currentIndex);
+
+        return ans;
+    }
+};
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner* obj = new StockSpanner();
+ * int param_1 = obj->next(price);
+
+ link : https://youtu.be/1_Bbq5qOraY?si=JrdabFozwH1RLIVY
+ */
