@@ -1,0 +1,67 @@
+/*
+    Following is Binary Tree Node structure:
+    class TreeNode
+    {
+    public:
+        int data;
+        TreeNode *left, *right;
+        TreeNode() : data(0), left(NULL), right(NULL) {}
+        TreeNode(int x) : data(x), left(NULL), right(NULL) {}
+        TreeNode(int x, TreeNode *left, TreeNode *right) : data(x), left(left), right(right) {}
+    };
+*/
+void inorderTraversal(TreeNode* root,vector<int>&ans1) {
+        // base case
+        if(root == NULL) return;
+        // L
+        inorderTraversal(root->left,ans1); 
+        // N
+        ans1.push_back(root->data);
+        // R
+        inorderTraversal(root->right,ans1); 
+
+    }
+
+void preorderTraversal(TreeNode* root,vector<int>&ans2) {
+        // base case
+        if(root == NULL) return;
+        
+        // N
+        ans2.push_back(root->data);
+        // L
+        preorderTraversal(root->left,ans2); 
+        // R
+        preorderTraversal(root->right,ans2);
+        
+        
+    }
+void postorderTraversal(TreeNode* root,vector<int>&ans3) {
+        // base case
+        if(root == NULL) return;
+        
+        // L
+        postorderTraversal(root->left,ans3); 
+        // R
+        postorderTraversal(root->right,ans3);
+        // N
+        ans3.push_back(root->data);
+        
+    }
+vector<vector<int>> getTreeTraversal(TreeNode *root){
+    // Write your code here.
+    vector<vector<int>> ans;
+    vector<int>ans1;
+    vector<int>ans2;
+    vector<int>ans3;
+    
+    inorderTraversal(root,ans1);
+    preorderTraversal(root,ans2);
+    postorderTraversal(root,ans3);
+
+    ans.push_back(ans1);
+    ans.push_back(ans2);
+    ans.push_back(ans3);
+
+    return ans;
+    
+}
