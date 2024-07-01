@@ -1,0 +1,10 @@
+bool isSameTree(TreeNode* p, TreeNode* q) {
+        if(p!=NULL && q==NULL || p==NULL && q!=NULL) return false;
+        if(p == NULL && q == NULL) return true;
+
+        // Check if the current nodes have the same data value
+        // and recursively check their left and right subtrees
+        return ((p->val == q->val)
+            && isSameTree(p->left, q->left)
+                && isSameTree(p->right, q->right));
+    }
