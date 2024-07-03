@@ -1,0 +1,11 @@
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == NULL) return NULL;
+        if(root == p || root == q) return root;
+        
+        TreeNode* Leftans = (lowestCommonAncestor(root->left,p,q));
+        TreeNode* Rightans = (lowestCommonAncestor(root->right,p,q));
+
+        if(Rightans != NULL && Leftans != NULL) return root;
+        if(Rightans == NULL) return Leftans;
+        else return Rightans;
+    }
