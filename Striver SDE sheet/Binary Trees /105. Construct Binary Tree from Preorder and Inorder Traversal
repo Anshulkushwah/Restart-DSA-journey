@@ -1,0 +1,34 @@
+
+    int position(vector<int>in, int key,int s,int e){
+        for(int i = s; i<=e; i++){
+            if(in[i] == key)
+                return i;
+        }
+        return -1;
+    }
+
+    TreeNode* buildTREE(vector<int>& in,vector<int>& pre,int &preOrderIndex, int inStart, int inEnd){
+
+        // Base case 
+        if(preOrderIndex >= pre.size() || inStart > inEnd){
+            return NULL;
+        }
+
+        int element = pre[preOrderIndex++];
+        TreeNode* root = new TreeNode(element);
+
+        // search element in inorder array
+        int pos = position(in, element,inStart,inEnd);
+        root->left = buildTREE(in,pre, preOrderIndex,inStart,pos-1);
+        root->right = buildTREE(in,pre, preOrderIndex,pos+1,inEnd);
+        return root;
+
+    }
+
+    // start here 
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+         
+         int index =0;
+        TreeNode* root = buildTREE(inorder,preorder,index,0,inorder.size()-1);
+        return root;
+    }
