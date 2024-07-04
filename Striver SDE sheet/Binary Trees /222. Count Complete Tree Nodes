@@ -1,0 +1,59 @@
+    // T.C : O(n)  / S.C : O(n) 
+    //  void inorder(TreeNode* root, int &count) {
+    //     if (root == NULL) 
+    //         return;
+    //     count++;
+    //     // Recursively call inorder
+    //     // on the left & right subtree
+    //     inorder(root->left, count);
+    //     inorder(root->right, count);
+    // }
+    // int countNodes(TreeNode* root) {
+    //     if (root == NULL) return 0;
+    //     int count = 0;
+    //     inorder(root, count);
+    //     return count;
+    // }
+///////////////////////////////////////////////////////////////////////////////////
+
+// Space Complexity : O(H) ~ O(N) where N is the number of nodes in the Binary Tree.
+// Time Complexity: O(log N * log N) 
+
+
+
+    int findHeightLeft(TreeNode* node) {
+        int height = 0;
+        // Traverse left child until
+        // reaching the leftmost leaf
+        while (node) {
+            height++;
+            node = node->left;
+        }
+        return height;
+    }
+
+    int findHeightRight(TreeNode* node) {
+        int height = 0;
+        // Traverse right child until
+        // reaching the rightmost leaf
+        while (node) {
+            height++;
+            node = node->right;
+        }
+        return height;
+    }
+
+    int countNodes(TreeNode* root) {
+        if (root == NULL) return 0;
+        
+        // Find the left & right height
+        int lh = findHeightLeft(root);
+        int rh = findHeightRight(root);
+        
+        // Check if the last level is completely filled || binary tree ie. (1 << lh) this means 2^h
+        if (lh == rh) 
+            return (1 << lh) - 1; 
+        
+        // If the last level is not completely filled, recursively count nodes in left and right subtrees
+        return 1 + countNodes(root->left) + countNodes(root->right);
+    }
