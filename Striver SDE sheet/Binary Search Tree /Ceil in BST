@@ -1,0 +1,26 @@
+// Function to return the ceil of given number in BST.
+int findCeil(Node* root, int key) {
+    
+        int ceil = -1; 
+        
+        while(root){
+            
+            if(root->data == key){
+                ceil = root->data;
+                return ceil;
+            } 
+            
+             // If the key is greater,move to the right subtree
+            if(root->data < key){
+                root = root->right;
+            }
+            else{ 
+                // If the key is smaller, update ceil and move to the left subtree
+                ceil = root->data;
+                root = root->left;
+            }
+        }
+         // Return the computed ceiling value
+    return ceil;
+    
+}
