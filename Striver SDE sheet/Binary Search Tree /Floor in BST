@@ -1,0 +1,25 @@
+    int floor(Node* root, int key) {
+        // Code here
+        int ceil = -1; 
+        
+        while(root){
+            
+            if(root->data == key){
+                ceil = root->data;
+                return ceil;
+            } 
+            
+             // If the key is greater,move to the right subtree
+            if(root->data < key){
+                // update ceil 
+                ceil = root->data;
+                root = root->right;
+            }
+            else{ 
+                // If the key is smaller and move to the left subtree
+                root = root->left;
+            }
+        }
+         // Return the computed ceiling value
+    return ceil;
+    }
