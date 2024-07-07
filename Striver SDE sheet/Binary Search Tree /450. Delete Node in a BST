@@ -1,0 +1,63 @@
+
+class Solution {
+    TreeNode* getMaxval(TreeNode* root){
+        TreeNode* temp = root;
+        while(temp->right != NULL){
+            temp = temp->right;
+        }
+        return temp;
+    }
+public:
+
+    TreeNode* deleteNode(TreeNode* root, int target) {
+
+        if(root == NULL) return NULL;
+
+        if(root->val == target){
+
+            // 0 child case
+            if(root->left == NULL && root->right == NULL){
+                delete root;
+                return NULL;
+            }
+
+            // 1 child case
+            if(root->left != NULL && root->right == NULL){
+                TreeNode* temp= root->left;
+                    delete root;
+                    return temp;
+            }
+
+            if(root->left == NULL && root->right != NULL){
+                TreeNode* temp= root->right;
+                    delete root;
+                    return temp;
+            }
+        
+
+            // two child case
+            if(root->left!=NULL && root->right!=NULL){
+                // get inorder pred
+
+                int pred = getMaxval(root->left)->val;
+                // copy
+                root->val = pred;
+
+                // solve bachi hui problem
+                root->left = deleteNode(root->left,pred);
+                return root;
+            }
+        }
+
+        // right call
+        else if (target > root->val)
+            root->right = deleteNode(root->right,target);
+
+        // left call
+        else
+            root->left = deleteNode(root->left,target);
+
+      return root; 
+
+    }
+};
