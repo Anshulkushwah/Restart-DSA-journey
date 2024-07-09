@@ -1,0 +1,8 @@
+int extractMax() {
+        // your code here
+        int ans = H[0];
+        H[0] = H[s];
+        s--;
+        shiftDown(0);
+        return ans;
+    }
