@@ -1,0 +1,56 @@
+    class Info{
+        public:
+        int data;
+        int row;
+        int col;
+        
+        Info(){
+            
+        }
+        
+        Info(int d, int r, int c){
+            this->data = d;
+            this->row = r;
+            this->col = c;
+        }
+    };
+    
+    class Cmp{
+        public:
+        
+        bool operator()(Info* a, Info* b){
+            return a->data > b->data;
+        }
+    };
+    
+    vector<int> mergeKArrays(vector<vector<int>> arr, int k)
+    {
+        //code here
+        int n = k;
+        
+        priority_queue<Info*, vector<Info*>, Cmp> minheap;
+        vector<int>ans;
+        
+        // step 1; put the first element to all rows into the heap;
+        
+        for(int i=0; i<k; i++){
+            int element = arr[i][0];
+            Info* temp = new Info(element,i,0);
+            minheap.push(temp);
+        }
+        
+        while(minheap.size()>0){
+            // fetch top element
+            Info * temp = minheap.top();
+            minheap.pop();
+            
+            ans.push_back(temp->data);
+            
+            // check if next element exist, if yes then push in heap
+            if(temp->col+1 < n){
+                Info* toPush = new Info(arr[temp->row][temp->col+1],temp->row, temp->col+1);
+                minheap.push(toPush);
+            }
+        }
+        return ans;
+    }
