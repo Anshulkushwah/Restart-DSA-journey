@@ -1,0 +1,36 @@
+void heapify(vector<int> &arr, int n, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    if (left < n && arr[left] > arr[largest]) largest = left;
+    if (right < n && arr[right] > arr[largest]) largest = right;
+
+    if (i != largest) {
+        swap(arr[i], arr[largest]);
+        heapify(arr, n, largest);
+    }
+}
+
+vector<int> replaceWithRank(vector<int> &arr, int n) {
+    vector<int> sortedArr = arr;
+    unordered_map<int, int> rankMap;
+
+    // Sort the array to determine ranks
+    sort(sortedArr.begin(), sortedArr.end());
+
+    // Assign ranks to elements
+    int rank = 1;
+    for (int i = 0; i < n; i++) {
+        if (rankMap.find(sortedArr[i]) == rankMap.end()) {
+            rankMap[sortedArr[i]] = rank++;
+        }
+    }
+
+    // Replace elements with their ranks
+    for (int i = 0; i < n; i++) {
+        arr[i] = rankMap[arr[i]];
+    }
+
+    return arr;
+}
