@@ -1,0 +1,22 @@
+    bool isMaxHeap(int arr[], int n)
+    {
+        // Your code goes here
+        int sizeofParent = n/2;
+        int i= 0;
+        
+        // i<sizeofParent-1 &&  i is less then array size 
+        while( i<sizeofParent-1 && (i*2)+2 < n){
+            // check root node greter or equal from leaf node
+            if(arr[i]>=arr[(i*2)+1] && arr[i]>=arr[(i*2)+2]) i++;
+            else return false;
+        }
+        
+        // if left exist and right not exist
+        if((i*2)+1 < n && (i*2)+2 != n-1){
+            // check left is greter or not 
+            if(arr[i]>=arr[(i*2)+1]) return true;
+            else return false;
+        }
+        
+        return true;
+    }
