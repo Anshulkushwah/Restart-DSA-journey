@@ -1,0 +1,20 @@
+    // Function to return a list containing the DFS traversal of the graph.
+    void dfs(int src,map<int,bool>&vis,vector<int>&ans,vector<int>adj[]){
+        vis[src] = true;
+        ans.push_back(src);
+        
+        for(auto neigh : adj[src] ){
+            if(!vis[neigh]) dfs(neigh,vis,ans,adj);
+        }
+    }
+    
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        // Code here
+        map<int,bool>vis;
+        vector<int>ans;
+        int src = 0;
+        
+        dfs(src,vis,ans,adj);
+        
+        return ans;
+    }
