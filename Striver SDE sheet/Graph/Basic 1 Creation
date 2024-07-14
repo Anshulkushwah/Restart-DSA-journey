@@ -1,0 +1,74 @@
+
+#include <iostream>
+#include <map>
+#include <list>
+
+using namespace std;
+
+template<typename T>
+
+class Graph{
+  public:
+    map<int,list<int>> adjList;
+    // for weight Graph
+    // map<T,list<pair<T,T>>> adjList;
+    
+    void addEdge(T u, T v, bool direction){
+        // for weight Graph
+        // void addEdge(T u, T v,T weight, bool direction){
+        
+        // direction = 0 -> undirected;
+        // direction = 1 -> direction;
+        
+        // for u -> v
+        adjList[u].push_back(v);
+        // for weighted
+            // adjList[u].push_back(make_pair(v,weight));
+        
+        // check v -> u
+        if(direction == 0) {
+            adjList[v].push_back(u);
+            // for weighted
+            // adjList[v].push_back(make_pair(u,weight));
+        }
+    }
+    
+    void PrintAdj(){
+        for(auto i : adjList){
+            cout<<i.first << "-> ";
+            for(auto j : i.second){
+                cout<<j<<",";
+                // for weighted
+                // cout<<"("<<j.first<<","<<j.second<<")";
+                
+            }
+            cout<<endl;
+        }
+    }
+};
+
+int main()
+{
+    // for normal code;
+    // Graph g;
+    
+    // this is use for genric code (template)
+    Graph<int>g;
+    
+    g.addEdge(0,1,0);
+    // use below type input for weighted Graph
+    // g.addEdge(0,1,3,0);
+    g.addEdge(0,1,0);
+    g.addEdge(1,2,0);
+    g.addEdge(1,3,0);
+    g.addEdge(2,3,0);
+    g.addEdge(3,4,0);
+    g.addEdge(2,4,0);
+    
+    cout<<"Printing the Adjancy List" << endl;
+    
+    g.PrintAdj();
+    
+
+    return 0;
+}
