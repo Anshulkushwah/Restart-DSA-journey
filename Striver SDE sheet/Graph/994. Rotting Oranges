@@ -1,0 +1,47 @@
+ int orangesRotting(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        // row col time
+        queue<pair<pair<int,int>,int>>q;
+        int vis[n][m];
+        int countfresh = 0;
+
+        for(int i=0; i<n;i++){
+            for(int j=0; j<m; j++){
+                if(grid[i][j]==2){
+                    q.push({{i,j},0});
+                    vis[i][j]=2;
+                }
+                else vis[i][j]=0;
+
+                if(grid[i][j] == 1) countfresh++;
+            }
+        }
+
+        int time=0;
+        int D_row[] = {-1,0,+1,0};
+        int D_col[] = {0,1,0,-1};
+        int count = 0;
+
+        while(!q.empty()){
+            int r = q.front().first.first;
+            int c = q.front().first.second;
+            int t = q.front().second;
+            time = max(time,t);
+            q.pop();
+
+            for(int i = 0; i<4; i++){
+                int n_row = r + D_row[i];
+                int n_col = c + D_col[i];
+                if(n_row >= 0 && n_row < n && n_col >= 0 && n_col < m 
+                    && vis[n_row][n_col] != 2 && grid[n_row][n_col] == 1){
+                        q.push({{n_row,n_col},t+1});
+                        vis[n_row][n_col] = 2;
+                        count++;
+                    }
+            }
+        }
+
+        if(count != countfresh) return -1;
+        else return time;
+    }
