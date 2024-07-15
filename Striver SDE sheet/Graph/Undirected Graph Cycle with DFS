@@ -1,0 +1,27 @@
+    // Function to detect cycle in an undirected graph with dfs.
+    
+    bool solve(int src, int parent, map<int,bool>&vis,vector<int> adj[]){
+        vis[src]=true;
+        
+        for(auto neigh:adj[src]){
+            if(!vis[neigh]){
+                if(solve(neigh,src,vis,adj) == true) return true;
+                
+            }    
+            else if(vis[neigh] == true && neigh != parent) return true;
+        }
+        
+        return false;
+    }
+    
+    bool isCycle(int V, vector<int> adj[]) {
+        // Code here
+        map<int,bool>vis;
+        
+        for(int i =0; i<V;i++){
+            if(!vis[i])
+            if(solve(i,-1,vis,adj) == true) return true;
+        }
+        
+        return false;
+    }
