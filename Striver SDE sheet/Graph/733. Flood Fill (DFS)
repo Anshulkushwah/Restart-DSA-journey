@@ -1,0 +1,27 @@
+void dfs(int row, int col,vector<vector<int>> &ans, int color, int DRow[],int DCol[], int initalColor ){
+            ans[row][col] = color;
+            int n = ans.size();
+            int m = ans[0].size();
+
+            for(int i = 0; i<4; i++){
+                int neighrow = row+DRow[i];
+                int neighcol = col+DCol[i];
+
+                if(neighrow>=0 && neighrow < n && neighcol>=0 && neighcol < m 
+                    && ans[neighrow][neighcol] == initalColor && ans[neighrow][neighcol] != color){
+                        dfs(neighrow,neighcol,ans,color,DRow,DCol,initalColor);
+                    }
+            }
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int initalColor = image[sr][sc];
+
+        vector<vector<int>>ans = image;
+        int DRow[] = {-1,0,1,0};
+        int DCol[] = {0,1,0,-1};
+
+        dfs(sr,sc,ans,color,DRow,DCol,initalColor);
+
+        return ans; 
+        
+    }
