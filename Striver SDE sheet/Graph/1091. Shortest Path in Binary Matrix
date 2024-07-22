@@ -1,0 +1,42 @@
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        pair<int,int>source = make_pair(0,0);
+        int n = grid.size();
+        int m = grid[0].size();
+        pair<int,int>destination = make_pair(n-1,m-1);
+
+        // for 1*1 mattrix 
+        if(n==1 && m==1 && grid[0][0]==0) return 1;
+        else if(n==1 && m==1 && grid[0][0]==1) return -1;
+
+        vector<vector<int>> dist(n,vector<int>(m,1e9));
+        queue<pair<int,pair<int,int>>>q;
+        // every node distance by self is 0
+        dist[source.first][source.second] = 0;
+        q.push({1,{source.first, source.second}});
+        // 8 direction (diagonal) 
+        int dr[] = {-1,-1,-1,0,0,1,1,1};
+        int dc[] = {-1,0,1,-1,1,-1,0,1};
+
+        while(!q.empty()){
+            auto it = q.front();
+            q.pop();
+
+            int dis = it.first;
+            int r = it.second.first;
+            int c = it.second.second;
+
+            for(int i=0;i<8; i++){
+                int newr = r+dr[i];
+                int newc = c+dc[i];
+
+                if((newr>=0 && newr<n && newc>=0 && newc<m) && 
+                    (grid[newr][newc] == 0 && dis+1 < dist[newr][newc])){
+                        dist[newr][newc] = 1+dis;
+                        if(grid[newr][newc] == grid[source.first][source.second] 
+                            && newr == destination.first && newc == destination.second) return dis+1;
+                        q.push({1+dis,{newr,newc}});
+                    }
+            }
+        }
+            return -1; 
+    }
